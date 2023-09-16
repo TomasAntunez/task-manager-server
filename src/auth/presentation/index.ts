@@ -1,0 +1,2 @@
+
+export { RegisterController } from './controllers';
