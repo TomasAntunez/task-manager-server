@@ -1,14 +1,14 @@
-import { InMemoryUserWritingRepository } from './data';
+import { InMemoryUserWritingRepository } from './infrastructure';
 
 
 const getComposition = () => {
 
-  const inMemoryUserWritingRepository = new InMemoryUserWritingRepository();
+
 
   return {
-    inMemoryUserWritingRepository
+
   };
 };
 
 
-export const { inMemoryUserWritingRepository } = getComposition();
+export const {  } = getComposition();

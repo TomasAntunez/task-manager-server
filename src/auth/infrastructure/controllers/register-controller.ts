@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { HttpStatus, HttpException } from '@/common/presentation';
-import { EmailUniqueError } from '@/users/domain';
+import { HttpStatus } from '@/common/domain';
+import { HttpExceptionSender } from '@/common/infrastructure';
 
 import { UserRegistrar } from '../../application';
 
@@ -18,14 +18,7 @@ export class RegisterController {
       res.status(HttpStatus.CREATED).json( result );
 
     } catch (error) {
-
-      if (error instanceof EmailUniqueError) {
-        return HttpException.send( res,
-          new HttpException({ ...error, status: HttpStatus.BAD_REQUEST })
-        );
-      }
-
-      HttpException.send(res, error);
+      HttpExceptionSender.run(res, error);
     }
   }
 

@@ -1,11 +1,12 @@
-import { User } from "../user-entity";
-import { CreateUserDto } from '../create-user-dto';
+import { User, UserProps } from "../user-entity";
 
 
-export type CreationResult = Omit<User, 'createdAt'|'updatedAt'>
+export type CreateUserParams = UserProps;
+
+export type CreateUserResult = User;
 
 
 export interface UserWritingRepository {
-  create( createUserDto: CreateUserDto ): Promise<CreationResult>;
+  create( createUserParams: CreateUserParams ): Promise<CreateUserResult>;
   update(): Promise<User>;
 }

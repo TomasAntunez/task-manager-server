@@ -1,6 +1,10 @@
 
-export interface BaseEntity {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date | null;
+
+export abstract class BaseEntity {
+
+  readonly createdAt = new Date();
+  readonly updatedAt: Date | null = null;
+
+  constructor( public readonly id: string ) {}
+
 }

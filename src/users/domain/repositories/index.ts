@@ -1,3 +1,3 @@
 
-export { UserWritingRepository, CreationResult } from './user-writing-repository';
-export { UserReadingRepository } from './user-reading-repository';
+export { UserWritingRepository, CreateUserResult, CreateUserParams } from './user-writing-repository';
+export { UserReadingRepository, FindByEmailResult } from './user-reading-repository';

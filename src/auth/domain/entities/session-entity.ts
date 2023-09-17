@@ -1,5 +1,8 @@
 
-export interface Session {
-  accessToken: string;
-  refreshToken: string;
+
+export class Session {
+  constructor(
+    public readonly accessToken: string,
+    public readonly refreshToken: string
+  ) {}
 }

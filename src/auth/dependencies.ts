@@ -1,18 +1,16 @@
-import { inMemoryUserWritingRepository } from '@/users/dependencies';
-
 import { UserRegistrar } from './application';
-import { RegisterController } from './presentation';
+import { RegisterController } from './infrastructure';
 
 
 const getComposition = () => {
 
-  const userRegistrar = new UserRegistrar(inMemoryUserWritingRepository);
+  const userRegistrar = new UserRegistrar();
   const registerController = new RegisterController(userRegistrar);
 
   return {
-    registerController
+    
   };
 }
 
 
-export const { registerController } = getComposition();
+export const {  } = getComposition();

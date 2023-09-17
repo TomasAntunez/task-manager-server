@@ -1,6 +1,9 @@
 import { User } from '../user-entity';
 
 
+export type FindByEmailResult = User;
+
+
 export interface UserReadingRepository {
-  findById(id: string): User;
+  findByEmail(email: string): Promise<FindByEmailResult>;
 }

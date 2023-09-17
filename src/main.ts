@@ -1,11 +1,11 @@
 import { exit } from 'node:process';
 
-import { ExpressServer } from '@/common/presentation';
+import { ExpressServer } from '@/common/infrastructure';
 
 
 ( () => {
   try {
-    
+
     new ExpressServer(3000).run();
 
   } catch (error) {
