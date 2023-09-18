@@ -1,49 +1,43 @@
-import { IdService } from '@/common/domain';
-import { EncryptionService, TokenService } from '@/auth/domain';
+import { AuthFactory } from '../../auth/domain';
 
-import { User } from '../domain';
+import { UserFactory, User } from '../domain';
 
 
-interface UsersMockProps {
-  idService         : IdService;
-  encryptionService : EncryptionService;
-  tokenService      : TokenService;
+interface UserMockProps {
+  userFactory: UserFactory,
+  authFactory: AuthFactory,
+  usersAmount: number
 }
 
 
 export class UsersMock {
 
-  public userList: Array<User> = this.getTestUsers();
+  private readonly userFactory: UserFactory;
+  private readonly authFactory: AuthFactory;
 
-  private readonly idService         : IdService;
-  private readonly encryptionService : EncryptionService;
-  private readonly tokenService      : TokenService;
+  readonly userList: Array<User> = [];
 
 
-  constructor({ idService, tokenService, encryptionService }: UsersMockProps) {
-    this.idService         = idService;
-    this.encryptionService = encryptionService;
-    this.tokenService      = tokenService;
+  constructor({ authFactory, userFactory, usersAmount }: UserMockProps) {
+    this.userFactory = userFactory;
+    this.authFactory = authFactory;
+    this.createManyUsers(usersAmount);
   }
 
 
-  private getTestUsers() {
-    return [
-      new User({
-        id: this.idService.createUUID(),
-        email: 'test1@email.com',
-        username: 'test1',
-        password: this.encryptionService.hashSync('123456'),
-        validationToken: this.tokenService.createValidationToken()
-      }),
-      new User({
-        id: this.idService.createUUID(),
-        email: 'test2@email.com',
-        username: 'test2',
-        password: this.encryptionService.hashSync('123456'),
-        validationToken: this.tokenService.createValidationToken()
-      })
-    ];
+  private createUser( number: number ) {
+    return this.userFactory.create({
+      email: `test${ number }@email.com`,
+      username: `test${ number }`,
+      auth: this.authFactory.create('123456')
+    });
+  }
+
+  private createManyUsers( amount: number ) {
+    for( let i = 1; i <= amount; i++ ) {
+      this.userList.push( this.createUser(i) );
+    }
+    console.log({ userList: this.userList });
   }
 
 }

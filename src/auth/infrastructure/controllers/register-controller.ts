@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { HttpStatus } from '@/common/domain';
-import { HttpExceptionSender } from '@/common/infrastructure';
+import { HttpStatus } from '../../../common/domain';
+import { HttpExceptionSender } from '../../../common/infrastructure';
 
 import { UserRegistrar } from '../../application';
 

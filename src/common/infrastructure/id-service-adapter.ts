@@ -1,12 +1,15 @@
-import { v4 as uuid } from 'uuid';
-
 import { IdService } from '../domain';
 
 
-export class idServiceAdapter implements IdService {
+export class IdServiceAdapter implements IdService {
 
-  createUUID(): string {
-    return uuid();
+  
+  validateUUID(): boolean {
+    throw new Error('Method not implemented.');
   }
-
+  
+  createUUID(): string {
+    return 'new-uuid';
+  }
+  
 }

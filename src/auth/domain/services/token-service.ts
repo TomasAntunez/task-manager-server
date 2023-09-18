@@ -1,4 +1,4 @@
-import { User } from '@/users/domain';
+import { User } from '../../../users/domain';
 
 
 export type Payload = Pick<User, 'id'>

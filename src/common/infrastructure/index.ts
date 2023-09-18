@@ -1,3 +1,3 @@
 
 export { ExpressServer, HttpExceptionSender } from './presentation';
-export { idServiceAdapter } from './id-service-adapter';
+export { IdServiceAdapter } from './id-service-adapter';

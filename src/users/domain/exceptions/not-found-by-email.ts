@@ -1,4 +1,4 @@
-import { NotFoundException } from '@/common/domain';
+import { NotFoundException } from '../../../common/domain';
 
 import { UserExceptionCode } from './user-exception-codes';
 

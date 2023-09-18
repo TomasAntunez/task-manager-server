@@ -1,6 +1,6 @@
 import { exit } from 'node:process';
 
-import { ExpressServer } from '@/common/infrastructure';
+import { ExpressServer } from './common/infrastructure';
 
 
 ( () => {

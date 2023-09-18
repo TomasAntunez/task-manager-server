@@ -4,7 +4,7 @@ import { TokenService, Payload } from '../../domain';
 export class TokenServiceAdapter implements TokenService {
   
   createValidationToken(): string {
-    throw new Error('Method not implemented.');
+    return 'new-validation-token';
   }
 
   createAccessToken(payload: Payload): string {

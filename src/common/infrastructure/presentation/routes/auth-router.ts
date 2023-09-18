@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { registerController } from '@/auth/dependencies';
+import { registerController } from '../../../../dependencies';
 
 
 const authRouter = Router();

@@ -1,7 +1,7 @@
-import { User } from '../user-entity';
+import { User } from '../entities';
 
 
-export type FindByEmailResult = User;
+export type FindByEmailResult = User | null;
 
 
 export interface UserReadingRepository {

@@ -1,4 +1,4 @@
-import { BadRequestException } from '@/common/domain';
+import { BadRequestException } from '../../../common/domain';
 
 import { UserExceptionCode } from './user-exception-codes';
 

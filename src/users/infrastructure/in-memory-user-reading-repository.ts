@@ -1,4 +1,4 @@
-import { User, UserReadingRepository } from '../domain';
+import { UserReadingRepository, FindByEmailResult } from '../domain';
 import { UsersMock } from './users-mock';
 
 
@@ -7,8 +7,9 @@ export class InMemoryUserReadingRepository implements UserReadingRepository {
   constructor( private readonly mock: UsersMock ) {}
 
 
-  findByEmail(email: string): Promise<User> {
-    throw new Error('Method not implemented.');
+  async findByEmail(email: string): Promise<FindByEmailResult> {
+    const user = this.mock.userList.find( user => user.email === email );
+    return user ? user : null;
   }
   
 }
