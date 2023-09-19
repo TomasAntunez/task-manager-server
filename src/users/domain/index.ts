@@ -1,8 +1,4 @@
 
-export { User } from './entities';
-export { UniqueEmailException, NotFoundByEmailException } from './exceptions';
-export {
-  UserWritingRepository, UserReadingRepository, CreateUserParams,
-  FindByEmailResult
-} from './repositories';
-export { UserFactory } from './user-factory';
+export { User } from './user-entity';
+export { UserRepository } from './user-repository';
+export { UniqueEmailError } from './errors';

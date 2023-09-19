@@ -1,26 +1,60 @@
-import {
-  UserWritingRepository, UserReadingRepository, UniqueEmailException
-} from '../../users/domain';
+import { IdService } from '../../common/domain';
+import { UserRepository, UniqueEmailError } from '../../users/domain';
 
-import { RegisterUserDto } from '../domain';
+import { EncryptionService, RegisterUserDto, TokenService } from '../domain';
+
+
+interface UserRegistrarProps {
+  userRepository    : UserRepository;
+  idService         : IdService;
+  encryptionService : EncryptionService;
+  tokenService      : TokenService;
+}
 
 
 export class UserRegistrar {
 
-  constructor(
-    private readonly userReadingRepository : UserReadingRepository,
-    private readonly userWritingRepository : UserWritingRepository
-  ) {}
+  private readonly userRepository    : UserRepository;
+  private readonly idService         : IdService;
+  private readonly encryptionService : EncryptionService;
+  private readonly tokenService      : TokenService;
 
 
-  async run( registerUserDto: RegisterUserDto ) {
+  constructor({
+    userRepository,
+    idService,
+    encryptionService,
+    tokenService
+  }: UserRegistrarProps) {
+    this.userRepository    = userRepository;
+    this.idService         = idService;
+    this.encryptionService = encryptionService;
+    this.tokenService      = tokenService;
+  }
 
-    const user = await this.userReadingRepository.findByEmail(registerUserDto.email);
 
-    if (user) throw new UniqueEmailException(user.email);
+  async run( registerUserDto: RegisterUserDto ): Promise<void> {
+
+    const existingUser = await this.userRepository.findByEmail(registerUserDto.email);
+
+    if (existingUser) throw new UniqueEmailError(existingUser.email);
 
 
-    return await this.userWritingRepository.create({ ...registerUserDto });
+    const user = this.userRepository.create({
+      id: this.idService.createUUID(),
+      email: registerUserDto.email,
+      username: registerUserDto.username,
+      password: this.encryptionService.hashSync(registerUserDto.password),
+      emailValidated: false,
+      createdAt: new Date(),
+      updatedAt: null,
+      validationToken: {
+        token: this.tokenService.createValidationToken()
+      }
+    });
+
+
+    await this.userRepository.save(user);
 
   }
 

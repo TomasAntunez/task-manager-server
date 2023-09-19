@@ -1,7 +1,7 @@
 import { Session } from '../entities';
 
 
-export interface AuthWritingRepository {
-  createSession(): Session;
-  updateSession(): Session;
+export interface SessionWritingRepository {
+  create(): Session;
+  save( session: Session ): Promise<Session>;
 }

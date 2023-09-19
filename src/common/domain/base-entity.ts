@@ -1,7 +1,24 @@
 
 
+interface BaseEntityProps {
+  id        : string;
+  createdAt : Date;
+  updatedAt : Date | null;
+}
+
+
 export abstract class BaseEntity {
-  id: string = '';
-  createdAt = new Date();
-  updatedAt: Date | null = null;
+
+  readonly id        : string;
+  readonly createdAt : Date;
+
+  updatedAt: Date | null;
+
+
+  constructor({ id, createdAt, updatedAt }: BaseEntityProps) {
+    this.id        = id;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+  }
+
 }

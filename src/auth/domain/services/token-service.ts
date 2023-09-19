@@ -1,7 +1,8 @@
-import { User } from '../../../users/domain';
 
+export interface Payload {
+  id: string;
+}
 
-export type Payload = Pick<User, 'id'>
 
 export interface TokenService {
   createAccessToken( payload: Payload ): string;

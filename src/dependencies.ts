@@ -1,46 +1,30 @@
 import { IdServiceAdapter } from "./common/infrastructure/id-service-adapter";
 
 import { UserRegistrar } from "./auth/application";
-import { AuthFactory } from "./auth/domain";
 import { BcryptAdapter, RegisterController, TokenServiceAdapter } from "./auth/infrastructure";
 
-import { UserFactory } from "./users/domain";
-import {
-  InMemoryUserReadingRepository, InMemoryUserWritingRepository, UsersMock
-} from "./users/infrastructure";
+import { UsersMock, InMemoryUserRepository } from "./users/infrastructure";
 
 
 // SERVICES
-const idServiceAdapter = new IdServiceAdapter();
+const idService = new IdServiceAdapter();
 const encryptionService = new BcryptAdapter();
 const tokenService = new TokenServiceAdapter();
 
 
-// FACTORIES
-const authFactory = new AuthFactory(encryptionService, tokenService);
-const userFactory = new UserFactory(idServiceAdapter);
-
-
 // REPOSITORIES
-const usersMock = new UsersMock({
-  userFactory,
-  authFactory,
-  usersAmount: 5
-});
+const usersMock = new UsersMock({ idService, encryptionService, tokenService });
 
-const inMemoryUserWritingRepository = new InMemoryUserWritingRepository({
-  userFactory,
-  authFactory,
-  mock: usersMock
-});
-const inMemoryUserReadingRepository = new InMemoryUserReadingRepository(usersMock);
+const inMemoryUserRepository = new InMemoryUserRepository(usersMock);
 
 
 // USE CASES
-const userRegistrar = new UserRegistrar(
-  inMemoryUserReadingRepository,
-  inMemoryUserWritingRepository
-);
+const userRegistrar = new UserRegistrar({
+  userRepository: inMemoryUserRepository,
+  idService,
+  encryptionService,
+  tokenService
+});
 
 
 // PRESENTATION
