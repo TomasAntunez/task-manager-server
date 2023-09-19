@@ -1,7 +1,7 @@
 import { IdService } from '../../common/domain';
 import { UserRepository, UniqueEmailError } from '../../users/domain';
 
-import { EncryptionService, RegisterUserDto, TokenService } from '../domain';
+import { EncryptionService, TokenService, RegisterUserDto } from '../domain';
 
 
 interface UserRegistrarProps {

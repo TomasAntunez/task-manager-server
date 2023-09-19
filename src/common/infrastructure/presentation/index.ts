@@ -1,3 +1,4 @@
 
 export { ExpressServer } from './espress-server';
-export { HttpExceptionSender } from './http-exception-sender';
+export { HttpException } from './http-exception';
+export { HttpStatus } from './http-status';
