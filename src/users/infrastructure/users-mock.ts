@@ -37,24 +37,28 @@ export class UsersMock {
     return [
       new User({
         id: this.idService.createUUID(),
-        email: 'test1@email.com',
         username: 'test1',
-        password: this.encryptionService.hashSync('123456'),
-        emailValidated: false,
         createdAt: new Date(),
         updatedAt: null,
+        credentials: {
+          email: 'test1@email.com',
+          emailValidated: false,
+          password: this.encryptionService.hashSync('123456'),
+        },
         validationToken: {
           token: this.tokenService.createValidationToken()
         }
       }),
       new User({
         id: this.idService.createUUID(),
-        email: 'test2@email.com',
         username: 'test2',
-        password: this.encryptionService.hashSync('123456'),
-        emailValidated: false,
         createdAt: new Date(),
         updatedAt: null,
+        credentials: {
+          email: 'test2@email.com',
+          emailValidated: false,
+          password: this.encryptionService.hashSync('123456'),
+        },
         validationToken: {
           token: this.tokenService.createValidationToken()
         }

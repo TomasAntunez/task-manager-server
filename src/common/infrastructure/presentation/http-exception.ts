@@ -14,17 +14,11 @@ export interface Exception {
 export class HttpException {
 
 
-  static handleValidationError( res: Response, error: unknown ) {
-
-    if ( error instanceof ValidationError ) {
-      return this.sendBadRequest( res, {
-        code: 'validation-error',
-        detail: error.messages
-      });
-    }
-
-    this.sendInternalServerError( res, error );
-
+  static sendValidationError( res: Response, error: ValidationError ) {
+    return this.sendBadRequest( res, {
+      code: 'validation-error',
+      detail: error.messages
+    });
   }
 
 

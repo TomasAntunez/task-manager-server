@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
+import { ValidationError } from '../../../common/domain';
 import { HttpException, HttpStatus } from '../../../common/infrastructure';
 import { UniqueEmailError } from '../../../users/domain';
 
-import { RegisterUserDto } from '../../domain';
 import { UserRegistrar } from '../../application';
 
 
@@ -13,22 +13,16 @@ export class RegisterController {
 
 
   async run( req: Request, res: Response ) {
-
-    const registerUserDto = new RegisterUserDto(req.body);
-
     try {
-      await registerUserDto.validate();
-    } catch (error) {
-      return HttpException.handleValidationError(res, error);
-    }
-
-
-    try {
-      const result = await this.userRegistrar.run(registerUserDto);
+      const result = await this.userRegistrar.run(req.body);
 
       res.status(HttpStatus.CREATED).json( result );
 
     } catch (error) {
+
+      if ( error instanceof ValidationError ) {
+        return HttpException.sendValidationError(res, error);
+      }
 
       if ( error instanceof UniqueEmailError ) {
         return HttpException.sendBadRequest( res, {

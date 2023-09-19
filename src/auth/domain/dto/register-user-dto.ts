@@ -1,5 +1,7 @@
 import { BaseDto, ValidationError } from '../../../common/domain';
-import { UsernameValueObject, EmailValueObject, PasswordValueObject } from '../../../users/domain';
+import { UsernameValueObject } from '../../../users/domain';
+
+import { EmailValueObject, PasswordValueObject } from '../value-objects'
 
 
 export interface RegisterUserDtoProps {

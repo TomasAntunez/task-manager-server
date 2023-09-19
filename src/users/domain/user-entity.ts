@@ -1,44 +1,39 @@
 import { BaseEntity } from '../../common/domain';
-import { ValidationToken, ValidationTokenProps } from '../../auth/domain';
+import {
+  ValidationToken, ValidationTokenProps, Credentials, CredentialsProps
+} from '../../auth/domain';
 
 
 export interface UserProps {
   id               : string;
-  email            : string;
   username         : string;
-  password         : string;
-  emailValidated   : boolean;
   createdAt        : Date;
   updatedAt        : Date | null;
+  credentials      : CredentialsProps;
   validationToken  : ValidationTokenProps;
 }
 
 
 export class User extends BaseEntity {
 
-  email           : string;
   username        : string;
-  password        : string;
-  emailValidated  : boolean;
+  credentials     : Credentials;
   validationToken : ValidationToken
 
 
   constructor({
     id,
-    email,
     username,
-    password,
-    emailValidated,
     createdAt,
     updatedAt,
+    credentials,
     validationToken
   }: UserProps) {
 
     super({ id, createdAt, updatedAt });
-    this.email           = email;
+
     this.username        = username;
-    this.password        = password;
-    this.emailValidated  = emailValidated;
+    this.credentials     = new Credentials(credentials);
     this.validationToken = new ValidationToken(validationToken);
   }
 

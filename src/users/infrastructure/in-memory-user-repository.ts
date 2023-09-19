@@ -20,7 +20,7 @@ export class InMemoryUserRepository implements UserRepository {
 
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = this.mock.userList.find( user => user.email === email );
+    const user = this.mock.userList.find( user => user.credentials.email === email );
 
     if (!user) return null;
   

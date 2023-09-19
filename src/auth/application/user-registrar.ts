@@ -1,7 +1,7 @@
 import { IdService } from '../../common/domain';
 import { UserRepository, UniqueEmailError } from '../../users/domain';
 
-import { EncryptionService, TokenService, RegisterUserDto } from '../domain';
+import { EncryptionService, TokenService, RegisterUserDto, RegisterUserDtoProps } from '../domain';
 
 
 interface UserRegistrarProps {
@@ -33,21 +33,28 @@ export class UserRegistrar {
   }
 
 
-  async run( registerUserDto: RegisterUserDto ): Promise<void> {
+  async run( registerUserDtoProps: RegisterUserDtoProps ): Promise<void> {
+
+    const registerUserDto = new RegisterUserDto(registerUserDtoProps);
+    
+    await registerUserDto.validate();
+
 
     const existingUser = await this.userRepository.findByEmail(registerUserDto.email);
 
-    if (existingUser) throw new UniqueEmailError(existingUser.email);
+    if (existingUser) throw new UniqueEmailError(existingUser.credentials.email);
 
 
     const user = this.userRepository.create({
       id: this.idService.createUUID(),
-      email: registerUserDto.email,
       username: registerUserDto.username,
-      password: this.encryptionService.hashSync(registerUserDto.password),
-      emailValidated: false,
       createdAt: new Date(),
       updatedAt: null,
+      credentials: {
+        email: registerUserDto.email,
+        emailValidated: false,
+        password: this.encryptionService.hashSync(registerUserDto.password)
+      },
       validationToken: {
         token: this.tokenService.createValidationToken()
       }
