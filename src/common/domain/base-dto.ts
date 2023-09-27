@@ -9,7 +9,7 @@ export abstract class BaseDto {
   abstract validate(): Promise<void>;
 
 
-  protected handleError<T extends BaseValueObject<U>, U>(
+  protected handleError< U, T extends BaseValueObject<U> >(
     ValueObject: {new ( value: U ): T}, value: U
   ) {
     try {

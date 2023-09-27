@@ -61,6 +61,9 @@ export class UserRegistrar {
     });
 
 
+    console.log({ user });
+
+
     await this.userRepository.save(user);
 
   }

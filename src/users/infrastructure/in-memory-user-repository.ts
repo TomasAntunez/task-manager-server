@@ -15,7 +15,7 @@ export class InMemoryUserRepository implements UserRepository {
 
   async save(user: User): Promise<User> {
     this.mock.userList.push(user);
-    return user;
+    return new User(user);
   }
 
 
@@ -23,7 +23,7 @@ export class InMemoryUserRepository implements UserRepository {
     const user = this.mock.userList.find( user => user.credentials.email === email );
 
     if (!user) return null;
-  
+
     return new User(user);
   }
 

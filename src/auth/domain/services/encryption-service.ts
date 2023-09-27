@@ -1,5 +1,5 @@
 
 export interface EncryptionService {
   hashSync( dataToHash: string ): string;
-  compareSync( hashedData: string, dataToCompare: string ): boolean;
+  compareSync( dataToCompare: string, hashedData: string ): boolean;
 }

@@ -1,6 +1,6 @@
 import express, { Application } from 'express';
 
-import { apiRouter } from './api-router';
+import { apiRouter } from './routes';
 
 
 export class ExpressServer {
