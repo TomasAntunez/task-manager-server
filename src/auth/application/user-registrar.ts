@@ -56,12 +56,10 @@ export class UserRegistrar {
         password: this.encryptionService.hashSync(registerUserDto.password)
       },
       validationToken: {
-        token: this.tokenService.createValidationToken()
+        token: this.tokenService.createValidationToken(),
+        expiration: null
       }
     });
-
-
-    console.log({ user });
 
 
     await this.userRepository.save(user);

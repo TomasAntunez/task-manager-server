@@ -14,21 +14,23 @@ export class RegisterController {
 
   async run( req: Request, res: Response ) {
     try {
-      const result = await this.userRegistrar.run(req.body);
+      await this.userRegistrar.run(req.body);
 
-      res.status(HttpStatus.CREATED).json( result );
+      res.sendStatus(HttpStatus.CREATED);
 
     } catch (error) {
 
       if ( error instanceof ValidationError ) {
-        return HttpException.sendValidationError(res, error);
+        HttpException.sendValidationError(res, error);
+        return;
       }
 
       if ( error instanceof UniqueEmailError ) {
-        return HttpException.sendBadRequest( res, {
+        HttpException.sendBadRequest( res, {
           code: 'unique-email',
           detail: error.message
         });
+        return;
       }
 
       HttpException.sendInternalServerError(res, error);

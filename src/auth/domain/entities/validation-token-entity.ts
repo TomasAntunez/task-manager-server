@@ -1,19 +1,19 @@
 
 
 export interface ValidationTokenProps {
-  token: string;
-  expiration?: Date | null;
+  token: string | null;
+  expiration: Date | null;
 }
 
 export class ValidationToken {
 
-  token: string;
+  token: string | null;
   expiration: Date | null;
 
 
   constructor({ token, expiration }: ValidationTokenProps) {
     this.token      = token;
-    this.expiration = expiration || null;
+    this.expiration = expiration;
   }
 
 }

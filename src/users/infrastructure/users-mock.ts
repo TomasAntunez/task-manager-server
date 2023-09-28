@@ -17,7 +17,7 @@ export class UsersMock {
   private readonly encryptionService : EncryptionService;
   private readonly tokenService      : TokenService;
   
-  readonly userList: Array<User>;
+  userList: Array<User>;
 
 
   constructor({
@@ -46,7 +46,8 @@ export class UsersMock {
           password: this.encryptionService.hashSync('123456'),
         },
         validationToken: {
-          token: this.tokenService.createValidationToken()
+          token: this.tokenService.createValidationToken(),
+          expiration: null
         }
       }),
       new User({
@@ -60,7 +61,8 @@ export class UsersMock {
           password: this.encryptionService.hashSync('123456'),
         },
         validationToken: {
-          token: this.tokenService.createValidationToken()
+          token: this.tokenService.createValidationToken(),
+          expiration: null
         }
       }),
     ]

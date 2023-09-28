@@ -1,7 +1,9 @@
 import { IdServiceAdapter } from "./common/infrastructure/id-service-adapter";
 
-import { UserRegistrar } from "./auth/application";
-import { BcryptAdapter, RegisterController, TokenServiceAdapter } from "./auth/infrastructure";
+import { UserRegistrar, EmailValidator } from "./auth/application";
+import {
+  BcryptAdapter, TokenServiceAdapter, RegisterController, ValidateEmailController
+} from "./auth/infrastructure";
 
 import { UsersMock, InMemoryUserRepository } from "./users/infrastructure";
 
@@ -25,7 +27,9 @@ const userRegistrar = new UserRegistrar({
   encryptionService,
   tokenService
 });
+const emailValidator = new EmailValidator(inMemoryUserRepository);
 
 
 // PRESENTATION
 export const registerController = new RegisterController(userRegistrar);
+export const validateEmailController = new ValidateEmailController(emailValidator);
