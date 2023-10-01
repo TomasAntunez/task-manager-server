@@ -48,6 +48,7 @@ export class UserRegistrar {
     const user = this.userRepository.create({
       id: this.idService.createUUID(),
       username: registerUserDto.username,
+      profileImageName: null,
       createdAt: new Date(),
       updatedAt: null,
       credentials: {

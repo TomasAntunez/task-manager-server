@@ -7,6 +7,7 @@ import {
 export interface UserProps {
   id               : string;
   username         : string;
+  profileImageName : string | null;
   createdAt        : Date;
   updatedAt        : Date | null;
   credentials      : CredentialsProps;
@@ -16,14 +17,17 @@ export interface UserProps {
 
 export class User extends BaseEntity {
 
-  username        : string;
-  credentials     : Credentials;
-  validationToken : ValidationToken
+  username         : string;
+  profileImageName : string | null;
+  
+  readonly credentials     : Credentials;
+  readonly validationToken : ValidationToken
 
 
   constructor({
     id,
     username,
+    profileImageName,
     createdAt,
     updatedAt,
     credentials,
@@ -33,6 +37,7 @@ export class User extends BaseEntity {
     super({ id, createdAt, updatedAt });
 
     this.username        = username;
+    this.profileImageName    = profileImageName;
     this.credentials     = new Credentials(credentials);
     this.validationToken = new ValidationToken(validationToken);
   }

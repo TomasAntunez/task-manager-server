@@ -38,6 +38,7 @@ export class UsersMock {
       new User({
         id: this.idService.createUUID(),
         username: 'test1',
+        profileImageName: null,
         createdAt: new Date(),
         updatedAt: null,
         credentials: {
@@ -53,6 +54,7 @@ export class UsersMock {
       new User({
         id: this.idService.createUUID(),
         username: 'test2',
+        profileImageName: null,
         createdAt: new Date(),
         updatedAt: null,
         credentials: {
