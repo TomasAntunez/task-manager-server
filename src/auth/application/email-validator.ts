@@ -1,4 +1,4 @@
-import { UserRepository, NotFoundByValidationTokenException } from '../../users/domain';
+import { UserRepository, NotFoundByValidationTokenError } from '../../users/domain';
 
 import { ValidateEmailDto, ValidateEmailDtoProps } from '../domain';
 
@@ -17,7 +17,7 @@ export class EmailValidator {
 
     const user = await this.userRepository.findByValidationToken(validateEmailDto.validationToken);
 
-    if (!user) throw new NotFoundByValidationTokenException();
+    if (!user) throw new NotFoundByValidationTokenError();
 
 
     user.credentials.emailValidated = true;

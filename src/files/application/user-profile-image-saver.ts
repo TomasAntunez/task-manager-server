@@ -1,6 +1,6 @@
 import { IdService } from '../../common/domain';
 
-import { FilesService, FileLocation } from '../domain';
+import { FilesService, FileLocation, FileNotExistsError } from '../domain';
 
 
 export class UserProfileImageSaver {
@@ -12,6 +12,8 @@ export class UserProfileImageSaver {
 
 
   async run( fileContent: any ): Promise<void> {
+
+    if (!fileContent) throw new FileNotExistsError();
 
     const file = this.filesService.createImage({
       name: this.idService.createUUID(),

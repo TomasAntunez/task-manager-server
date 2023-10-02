@@ -23,15 +23,15 @@ export class MulterHandler {
 
 
   private getConfig(
-    fileSizeInBytes: number = 1000000,
+    fileSizeInBytes: number = 100000,
     allowedMimetypes: Array<string> = imagesAllowedMimetypes
   ): Options {
     return {
       limits: { fileSize: fileSizeInBytes },
       storage: this.multer.memoryStorage(),
       fileFilter( _req, file, callback ) {
-        if ( !allowedMimetypes.includes(file.mimetype) ) {
-          return callback( null, false );
+        if ( allowedMimetypes.includes(file.mimetype) ) {
+          return callback( null, true );
         }
         return callback(
           new Error(`The file format must be ${ allowedMimetypes.join() }`)

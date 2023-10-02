@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { ValidationError } from '../../../common/domain';
 import { HttpException, HttpStatus } from '../../../common/infrastructure';
-import { NotFoundByValidationTokenException } from '../../../users/domain';
+import { NotFoundByValidationTokenError } from '../../../users/domain';
 
 import { EmailValidator } from '../../application';
 
@@ -24,7 +24,7 @@ export class ValidateEmailController {
         return HttpException.sendValidationError(res, error);
       }
 
-      if ( error instanceof NotFoundByValidationTokenException ) {
+      if ( error instanceof NotFoundByValidationTokenError ) {
         return HttpException.sendBadRequest( res, {
           code: 'invalid-validation-token',
           detail: error.message

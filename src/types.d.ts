@@ -2,6 +2,7 @@
 
 declare namespace Express {
   export interface Request {
-    files: Array<Express.Multer.File>
+    file?: Express.Multer.File;
+    files?: Array<Express.Multer.File>;
   }
 }

@@ -1,5 +1,5 @@
 
-export class NotFoundByValidationTokenException extends Error {
+export class NotFoundByValidationTokenError extends Error {
   constructor() {
     super(`Invalid token`);
   }
