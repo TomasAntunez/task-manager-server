@@ -1,8 +1,9 @@
 import { IdServiceAdapter } from "./common/infrastructure/id-service-adapter";
 
-import { UserProfileImageSaver } from './files/application';
+import { UserProfileImageSaver, UserProfileImageGetter } from './files/application';
 import {
-  MulterHandler, FilesMiddleware, UserProfileImageSaveController, AWSS3Adapter
+  MulterHandler, FilesMiddleware, SaveUserProfileImageController,
+  AWSS3Adapter, GetUserProfileImageController
 } from './files/infrastructure';
 
 import { UserRegistrar, EmailValidator } from "./auth/application";
@@ -29,6 +30,7 @@ const inMemoryUserRepository = new InMemoryUserRepository(usersMock);
 
 // USE CASES
 const userProfileImageSaver = new UserProfileImageSaver(awsS3Adapter, idService);
+const userProfileImageGetter = new UserProfileImageGetter(awsS3Adapter);
 
 const userRegistrar = new UserRegistrar({
   userRepository: inMemoryUserRepository,
@@ -43,8 +45,11 @@ const emailValidator = new EmailValidator(inMemoryUserRepository);
 const multerHandler = new MulterHandler();
 export const filesMiddleware = new FilesMiddleware(multerHandler);
 
-export const userProfileImageSaveController = new UserProfileImageSaveController(
+export const saveUserProfileImageController = new SaveUserProfileImageController(
   userProfileImageSaver
+);
+export const getUserProfileImageController = new GetUserProfileImageController(
+  userProfileImageGetter
 );
 
 export const registerController = new RegisterController(userRegistrar);

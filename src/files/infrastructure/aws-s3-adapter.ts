@@ -1,4 +1,7 @@
-import { S3Client, PutObjectCommand, PutObjectCommandInput } from '@aws-sdk/client-s3';
+import {
+  S3Client, PutObjectCommand, PutObjectCommandInput, GetObjectCommand, GetObjectCommandInput
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 import { env } from '../../common/domain';
 
@@ -6,9 +9,9 @@ import { FileLocation, FileProps, FilesService, File } from '../domain';
 
 
 export class AWSS3Adapter implements FilesService {
-
+  
   private readonly bucketName = env.aws.S3_BUCKET_NAME;
-
+  
   private readonly s3Client = new S3Client({
     region: env.aws.S3_BUCKET_REGION,
     credentials: {
@@ -17,35 +20,41 @@ export class AWSS3Adapter implements FilesService {
     }
   });
 
-
-
+  
+  
   createImage( fileProps: FileProps ): File {
     return new File(fileProps);
   }
-
-
+  
+  
   async saveImage( file: File ): Promise<void> {
     
     const { name, location, content } = file as File<Express.Multer.File>;
-
-    const fileType = content.mimetype.split('/')[1];
-
+    
     const params: PutObjectCommandInput = {
       Bucket: this.bucketName,
-      Key: `${ location }/${ name }.${ fileType }`,
+      Key: `${ location }/${ name }`,
       Body: content.buffer,
       ContentType: content.mimetype
     };
-
+    
     const command = new PutObjectCommand(params);
     
     await this.s3Client.send(command);
-
+    
   }
+  
+  
+  async getImage(name: string, location: FileLocation): Promise<string> {
 
+    const params: GetObjectCommandInput = {
+      Bucket: this.bucketName,
+      Key: `${ location }/${ name }`
+    };
 
-  getImage<T>( name: string, location: FileLocation ): Promise<T> {
-    throw new Error('Method not implemented.');
+    const command = new GetObjectCommand(params);
+
+    return await getSignedUrl( this.s3Client, command, { expiresIn: 3600 } );
   }
-
+  
 }

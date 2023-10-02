@@ -7,7 +7,7 @@ import { UserProfileImageSaver } from '../../application';
 
 
 
-export class UserProfileImageSaveController {
+export class SaveUserProfileImageController {
 
   constructor( private readonly userProfileImageSaver: UserProfileImageSaver ) {}
 
